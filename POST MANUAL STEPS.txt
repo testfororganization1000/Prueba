@@ -1,0 +1,80 @@
+In case you had issues with object ST_J_1BNFE_ERROR_MESSAGE when
+executing report NOTE_2614205, follow these instructions to create/update
+the transformation object:
+- Open transaction code STRANS;
+- Enter ST_J_1BNFE_ERROR_MESSAGE in the field Transformation;
+- Choose "Display" pushbutton;
+- If the object exists, follow the instructions for "Updating
+ST_J_1BNFE_ERROR_MESSAGE". Otherwise, follow the instructions for
+"Creating ST_J_1BNFE_ERROR_MESSAGE";
+                                                                        
+1. Updating ST_J_1BNFE_ERROR_MESSAGE:
+- Choose "Change pushbutton;
+- Replace the content with the following code:
+
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates">
+  <tt:root name="RETURN"/>
+  <tt:template>
+    <object>
+      <str>
+        <tt:skip ref="RETURN.accessKey"/>
+      </str>
+      <tt:switch>
+        <tt:d-cond using="type-C(RETURN.statusNfe)">
+          <str>
+            <tt:skip ref="RETURN.statusNfe"/>
+          </str>
+        </tt:d-cond>
+        <tt:d-cond>
+          <null>
+            <tt:skip ref="RETURN.statusNfe"/>
+          </null>
+        </tt:d-cond>
+      </tt:switch>
+      <array>
+        <tt:copy ref="RETURN.messages"/>
+      </array>
+    </object>
+  </tt:template>
+</tt:transform>
+
+- Activate and Save the object.
+------------------------------------------------------
+
+2. Creating ST_J_1BNFE_ERROR_MESSAGE:
+- Choose "Create" pushbutton;
+- Enter "ST_J_1BNFE_ERROR_MESSAGE" in the field "Transformation";
+- Enter "NFe Error Message" in the field "Short Description";
+- Choose "Simple Transformation" in the field "Transformation Type";
+- Choose "Save" pushbutton;
+- Paste the following code to the Source Code:
+                                                                     
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates">
+  <tt:root name="RETURN"/>
+  <tt:template>
+    <object>
+      <str>
+        <tt:skip ref="RETURN.accessKey"/>
+      </str>
+      <tt:switch>
+        <tt:d-cond using="type-C(RETURN.statusNfe)">
+          <str>
+            <tt:skip ref="RETURN.statusNfe"/>
+          </str>
+        </tt:d-cond>
+        <tt:d-cond>
+          <null>
+            <tt:skip ref="RETURN.statusNfe"/>
+          </null>
+        </tt:d-cond>
+      </tt:switch>
+      <array>
+        <tt:copy ref="RETURN.messages"/>
+      </array>
+    </object>
+  </tt:template>
+</tt:transform>
+
+- Activate and Save the object.
